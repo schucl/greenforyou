@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+      <%= simple_form_for(@plant) do |f|%>
+        <% if @plant.errors.any? %>
+          <% @plant.errors.full_messages.each do |message| %>
+            <%= message %>
+          <% end %>
+        <% end %>
+        <%= f.input :name, placeholder: "Palm Tree"  %>
+        <%= f.input :description  %>
+        <%= f.input :address, input_html: { class: "address-autocomplete" }, label: false  %>
+        <%= f.input :category, :collection => ["Luxiourious", "Jungle", "Warriors", "PLANTE DÉPOLLUANTE !" ] %>
+        <%= f.input :photo, as: :attachinary %>
+        <%= f.submit "Add Plant", class: "btn btn-primary"  %>
+        <% end %>
+    </div>
+  </div>
+</div>

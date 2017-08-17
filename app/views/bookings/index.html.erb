@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+      <h1>All bookings</h1>
+      <% @bookings.each do |booking| %>
+      <strong><p><%= booking.status %></p></strong>
+      <h4><%= booking.start_date %></h4>
+      <h4><%= booking.end_date %></h4>
+      <p><%= booking.plant.name %></p>
+      <p><%= booking.user.email %></p>
+      <br><br>
+      <% end %>
+    </div>
+  </div>
+</div>
+

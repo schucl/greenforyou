@@ -1,0 +1,48 @@
+<div class="main-container">
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+      <h1>Our Plants</h1>
+      <% @plants.each do |plant| %>
+        <%= plant.name %>
+        <%= link_to "DETAILS", plant_path(plant) %>
+      <% end %>
+
+       <%= link_to "Add Plant", new_plant_path %>
+    </div>
+    <div id="map" style="width: 400px; height: 500px;"></div>
+  </div>
+</div>
+<% content_for(:after_js) do %>
+  <script>
+  var styles = [
+    {
+        "featureType": "poi.business",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    }
+];
+
+    $(document).ready(function() {
+      var handler = Gmaps.build('Google')
+      handler.buildMap({ provider: {
+          styles: styles
+          // pass in other Google Maps API options here
+          // => https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+          },
+        internal: { id: 'map' } }, function() {
+        markers = handler.addMarkers(<%= raw @hash.to_json %>);
+        handler.bounds.extendWith(markers);
+        handler.fitMapToBounds();
+        if (markers.length == 0) {
+          handler.getMap().setZoom(2);
+        } else if (markers.length == 1) {
+          handler.getMap().setZoom(14);
+        }
+      });
+    });
+  </script>
+<% end %>
